@@ -1,0 +1,9 @@
+1) python manage.py makemigrations [ Migrations for 'shop':
+  shop\migrations\0001_initial.py
+    - Create model Product
+]
+2) python manage.py migrate [
+ Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, sessions, shop
+Running migrations:
+  Applying shop.0001_initial... OK ]
