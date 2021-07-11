@@ -11,3 +11,14 @@ Running migrations:
 4) username: dell
    email : sureshangry3@gmail.com
    pass : DD6709-+1@#ghty
+
+
+# --------------------- 30 ( Powershell )--------------------------
+
+myprod = Product(product_name='mouse',category='computer',price=12,desc='chuha hain ye',pub_date=timezone.now())
+myprod.save()
+myprod.product_name
+Product.objects.all()
+Product.objects.get(product_name='mouse')
+a = Product.objects.get(product_name='mouse')
+a.category
