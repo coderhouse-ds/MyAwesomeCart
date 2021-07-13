@@ -11,9 +11,9 @@
             }
 
           .col-md-3 img{
-
-          width: 255px;
-          height: 355px;
+          width: 227px;
+          max-height: 242px;
+            margin:auto;
           }
 
           body .carousel-indicator li{
@@ -28,10 +28,11 @@
           body .carousel-control-next-icon{
           background-color: blue;
           }
-         .carousel-control-prev,
-         .carousel-control-next{
-          top:auto;
-        bottom:auto;
+
+          .carousel-control-prev,
+          .carousel-control-next{
+          top: auto;
+bottom: auto;
           }
            body .no-padding{
            padding-left: 0,
@@ -42,15 +43,16 @@
 {% block body %}
 {% load static %}
 <div class="container">
+
     <!--Slideshow starts here -->
-    {% for product,range,nSlides in allProds %}
-    <h1>{{product.0.category}}</h1>
+    {% for product, range, nSlides in allProds %}
+    <h5 class="my-4">Flash Sale On {{product.0.category}} - Recommended Items</h5>
 <div id="demo{{forloop.counter}}" class="carousel slide my-3" data-ride="carousel">
     <ul class="carousel-indicators">
       <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
 
        {% for i in range %}
-      <li data-target="#demo{{forloop.parent.counter}}" data-slide-to="{{i}}" ></li>
+      <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}" ></li>
       {% endfor %}
     </ul>
 
@@ -99,9 +101,6 @@
     <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
         <span class="carousel-control-next-icon"></span>
     </a>
-
-{% endfor %}
-    </div>
+    {% endfor %}
+</div>
  {% endblock %}
-
-
