@@ -96,13 +96,16 @@ if (localStorage.getItem('cart') == null) {
 //$('.cart').click(function() {
     $('.divpr').on('click', 'button.cart', function(){
     var idstr = this.id.toString();
+    console.log(idstr);
     if (cart[idstr] != undefined) {
         qty =  cart[idstr][0] + 1;
-    } else {
+    } 
+    else {
         qty = 1;
         name = document.getElementById('name'+idstr).innerHTML;
         cart[idstr] = [qty,name];
     }
+
     updateCart(cart);
 });
 //Add Popover to cart
