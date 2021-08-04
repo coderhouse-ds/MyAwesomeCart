@@ -3,17 +3,27 @@
 {% block body %}
 <div class="container">
     <div class="col my-4">
-    
         <h2>Step 1 - My Awesome Cart Express Checkout - Review Your Cart Items</h2>
         <div class="my-4">
             <ul class="list-group" id="items">
             </ul>
+
+            <nav aria-label="breadcrumb">
+  <ol class="breadcrumb mt-3">
+    <li class="breadcrumb-item active" aria-current="page">Your Cart Total Is <b>Rs. <span id="totalPrice"></span></b>. Enter your details below & place your order. Thanks for using My Awesome Cart!</li>
+  </ol>
+</nav>
+
+
+
+            
         </div>
     </div>
     <div class="col my-4">
         <h2>Step 2 - Enter Address & Other Details:</h2>
         <form method="post" action="/shop/checkout/">{% csrf_token %}
             <input type="hidden" name="itemsJson" id="itemsJson">
+            <input type="hidden" name="amount" id="amount">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputname">Name</label>
@@ -50,8 +60,7 @@
                 <label for="inputZip">Phone Number</label>
                 <input type="tel" class="form-control" id="phone" name="phone">
             </div>
-            <button type="submit" class="btn btn-primary" onclick="pageRedirect()">Place Order</button>
-         
+            <button type="submit" class="btn btn-primary">Place Order</button>
         </form>
     </div>
 </div>
@@ -65,7 +74,7 @@ if (localStorage.getItem('cart') == null) {
 }
 console.log(cart);
 var sum = 0;
-var total_bill = 0
+var totalPrice = 0;
 if ($.isEmptyObject(cart)) {
     //if object is empty
     mystr = `<p>Your cart is empty, please add some items to your cart before checking out!</p>`
@@ -74,33 +83,24 @@ if ($.isEmptyObject(cart)) {
     for (item in cart) {
         let name = cart[item][1];
         let qty = cart[item][0];
-        let price = cart[item][2] * qty;
-        total_bill += price
+        let itemPrice = cart[item][2];
         sum = sum + qty;
+        totalPrice = totalPrice + qty* itemPrice;
         mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
                     ${name}
-                    <span class="badge badge-light mx-2">${qty} Item - Rs.${price}</span>
-
+                    <span class="badge badge-primary badge-pill">${qty}</span>
                 </li>`
         $('#items').append(mystr);
     }
-
-
-    total = `<div class="alert alert-success" role="alert">  
-<li class="list-group-item d-flex justify-content-between align-items-center">
-                    <h3>Total Bill</h3>
-                    <h3>  Rs.${total_bill}  </h3>
-
-                </li></div>`
-    $('#items').append(total);
 }
 document.getElementById('cart').innerHTML = sum;
+document.getElementById('totalPrice').innerHTML = totalPrice;
 $('#itemsJson').val(JSON.stringify(cart));
 {% if thank %}
 alert('Thanks for ordering with us. Your order is is {{id}}. Use it to track your order using our order tracker');
 localStorage.clear();
 document.location = "/shop";
 {% endif %}
-
-//</script>
+$('#amount').val($('#totalPrice').html())
+</script>
 {% endblock %}
